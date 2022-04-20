@@ -13,9 +13,15 @@ import random
 import argparse
 
 pd.set_option('display.float_format', lambda x: '%.0f' % x)
-# parser = argparse.ArgumentParser()
-# parser.add_argument('--method', type=str, default='kmeans')
-# args = parser.parse_args()
+
+
+parser = argparse.ArgumentParser()
+parser.add_argument('--method', type=str, default='akm')
+parser.add_argument('--site', type=str, default='site3')
+parser.add_argument('--floor', type=str, default='F2')
+
+parser.add_argument('--thre', type=str, default='0.1')
+args = parser.parse_args()
 
 random.seed(2021)
 def parse_delta(masks, tss):
@@ -45,7 +51,6 @@ def parse_rec(values, masks, evals, eval_masks, tss, dir_):
         rec_list.append(rec)
     return rec_list
 
-
 def find_waypoint(t, wp_df):
     wp_df = wp_df.sort_values(by=['wp_ts'], ascending=True)
     wp_df_a = wp_df.shift(-1).rename(columns={'wp_ts':'a_ts', 'x':'a_x', 'y':'a_y'})
@@ -54,32 +59,34 @@ def find_waypoint(t, wp_df):
     if not target_row.empty:
         x = target_row.loc[0,'x'] + ((target_row.loc[0,'a_x']-target_row.loc[0,'x'])/(target_row.loc[0,'a_ts']-target_row.loc[0,'wp_ts']))*(t-target_row.loc[0,'wp_ts'])
         y = target_row.loc[0,'y'] + ((target_row.loc[0,'a_y']-target_row.loc[0,'y'])/(target_row.loc[0,'a_ts']-target_row.loc[0,'wp_ts']))*(t-target_row.loc[0,'wp_ts'])
-        # print('target_row', x, y)
+        print('target_row', x, y)
         return x, y
     else:
         wp_df = wp_df.drop_duplicates(subset=['wp_ts', 'x', 'y'])
         wp_df = wp_df.reset_index(drop=True)
         if len(wp_df)>=2:
             if t <= wp_df.loc[0,'wp_ts']:
-                # print('t',t)
-                # print('wp_df', wp_df)
+                print('t',t)
+                print('wp_df', wp_df)
                 x = wp_df.loc[0,'x'] - ((wp_df.loc[1, 'x'] - wp_df.loc[0, 'x']) * (wp_df.loc[0,'wp_ts'] - t))/(wp_df.loc[1, 'wp_ts'] - wp_df.loc[0, 'wp_ts'])
                 y = wp_df.loc[0,'y'] - ((wp_df.loc[1, 'y'] - wp_df.loc[0, 'y']) * (wp_df.loc[0,'wp_ts'] - t))/(wp_df.loc[1, 'wp_ts'] - wp_df.loc[0, 'wp_ts'])
-                # print('approach 111', x,y)
+                print('approach 111', x,y)
             else:
                 x = ((wp_df.loc[len(wp_df)-1,'x'] - wp_df.loc[len(wp_df)-2,'x'])*(t - wp_df.loc[len(wp_df)-1,'wp_ts']))/(wp_df.loc[len(wp_df)-1,'wp_ts'] - wp_df.loc[len(wp_df)-2,'wp_ts']) +  wp_df.loc[len(wp_df)-1,'x']
                 y = ((wp_df.loc[len(wp_df)-1,'y'] - wp_df.loc[len(wp_df)-2,'y'])*(t - wp_df.loc[len(wp_df)-1,'wp_ts']))/(wp_df.loc[len(wp_df)-1,'wp_ts'] - wp_df.loc[len(wp_df)-2,'wp_ts']) +  wp_df.loc[len(wp_df)-1,'y']
-                # print('approach 222', x, y)
+                print('approach 222', x, y)
         else:
             if t <= wp_df.loc[0,'wp_ts']:
                 x = wp_df.loc[0,'x'] - (wp_df.loc[0,'wp_ts']-t)*1
                 y = wp_df.loc[0,'y'] - (wp_df.loc[0,'wp_ts']-t)*1
-                # print('approach 333', x, y)
+                print('approach 333', x, y)
             else:
                 x = (t - wp_df.loc[0,'wp_ts'])*1 + wp_df.loc[0,'x']
                 y = (t - wp_df.loc[0,'wp_ts'])*1 + wp_df.loc[0,'y']
-                # print('approach 444', x, y)
+                print('approach 444', x, y)
         return x, y
+
+
 def interpolate_rp(group_df):
     ori_shape = group_df.shape
     ori_index = group_df.index
@@ -98,8 +105,6 @@ def interpolate_rp(group_df):
                 have_null_wp_df.loc[index, 'wp_ts'] = ts
             else:
                 print('Hahahahah')
-    # have_null_wp_df_after_inter = have_null_wp_df.loc[have_null_wp_df['wp_ts'].isnull(),:]
-    # print('have_null_wp_df_after_inter shape', have_null_wp_df_after_inter.shape)
     group_df = pd.concat([have_wp_df, have_null_wp_df], axis=0)
     group_df = group_df.loc[ori_index,:]
     post_shape = group_df.shape
@@ -115,22 +120,30 @@ def transform_sample(sample_df, xy_df):
     # print('feats', feats.iloc[0,:10])
     labels_evals = sample_df.loc[:, ['x', 'y']].values
     label_shp = labels_evals.shape
-    # print('label_shp',label_shp)
+    print('label_shp',label_shp)
     indices_y = np.unique(np.where(~np.isnan(labels_evals))[0])
+    cnt = 0
     if len(indices_y)>=4:
         man_indices_y = np.random.choice(indices_y, 1)
-    elif len(indices_y)>=3 and len(indices_y)<4:
+        cnt+=1
+    elif len(indices_y)>=2 and len(indices_y)<4:
+        cnt+=1
         man_indices_y = np.random.choice(indices_y, 1)
+    elif len(indices_y)>=1 and len(indices_y)<2:
+        rn = random.random()
+        if rn < 0.12:
+            cnt+=1
+            man_indices_y = np.random.choice(indices_y, 1)
+        else:
+            man_indices_y = False
     else:
         man_indices_y = False
-    # print('man_indices_y', man_indices_y)
+    print('man_indices_y', man_indices_y)
     labels_values = labels_evals.copy()
     labels_values[man_indices_y] = np.nan
     masks_y = ~np.isnan(labels_values)
     eval_masks_y = (~np.isnan(labels_values)) ^ (~np.isnan(labels_evals))
-
     delta_y = parse_delta(masks_y.astype(int), tss)
-    # print('delta_y', delta_y.shape)
     masks_y = masks_y.astype(int).tolist()
     eval_masks_y = eval_masks_y.astype(int).tolist()
     labels_values = np.nan_to_num(labels_values, nan=0)
@@ -143,22 +156,16 @@ def transform_sample(sample_df, xy_df):
     labels_evals = np.round(labels_evals, 6)
     labels_eval_list = labels_evals.tolist()
 
-    evals = feats.values
+    evals = feats.values.astype(float)
     shp = evals.shape
     evals = evals.reshape(-1)
-    # randomly eliminate 10% values as the imputation ground-truth
-    # indices = np.where((~np.isnan(evals))&(evals!=-100))[0].tolist()
-    # indices = np.random.choice(indices, len(indices) // 10)
     values = evals.copy()
-    #values[indices] = np.nan
     masks = ~np.isnan(values)
     eval_masks = (~np.isnan(values)) ^ (~np.isnan(evals))
     evals = evals.reshape(shp)
     values = values.reshape(shp)
     values = np.nan_to_num(values, nan=-100)
     values = (values - mean) / std
-    print('values', values)
-    print('values nan',np.where(np.isnan(values)))
     evals = np.nan_to_num(evals, nan=-100)
     evals = (evals - mean) / std
     masks = masks.reshape(shp)
@@ -167,31 +174,22 @@ def transform_sample(sample_df, xy_df):
     evals = np.round(evals, 6)
     masks = masks.astype(int)
     eval_masks = eval_masks.astype(int)
-    # print('values', values.shape)
+    print('values', values.shape)
     rec = {'label': labels_list}
     rec['masks_y'] = masks_y
-    rec['eval_masks_y'] = eval_masks_y
     rec['delta_y'] = delta_y.tolist()
+    rec['eval_masks_y'] = eval_masks_y
     rec['eval_label'] = labels_eval_list
     rec['forward'] = parse_rec(values, masks, evals, eval_masks, tss, dir_='forward')
     rec['backward'] = parse_rec(values[::-1],masks[::-1], evals[::-1], eval_masks[::-1], tss_bk, dir_='backward')
-    return rec
+    return rec, len(indices_y), cnt
 
-site = 'site5'
-floor_num = 'F4'
-method = 'knn'
-k= 40
-eta= 0.3
+site = args.site
+floor_num = args.floor
 derived_data_path = '../derived_data/{site}/{floor}'.format(site=site, floor=floor_num)
-wifi_df = pd.read_csv(os.path.join(derived_data_path, 'fp_filterd_{site}_{floor}_{method}_{k}_eta_{eta}.csv'.format(site=site, floor=floor_num, method=method, k=k, eta=eta)), header=0)
-
-# wifi_df = pd.read_csv(os.path.join(derived_data_path, 'fp_sample_F1.csv'.format(site=site, floor=floor_num, method=method)), header=0)
-
+print('method', args.method)
+wifi_df = pd.read_csv(os.path.join(derived_data_path, 'fp_filterd_{site}_{floor}_{method}_{thre}.csv'.format(site=site, floor=floor_num, method=args.method, thre=args.thre)), header=0)
 # wifi_df = pd.read_csv(os.path.join(derived_data_path, 'fp_filterd_F1.csv'.format(site=site, floor=floor_num)), header=0)
-
-print('1 wifi_df shape', wifi_df.shape)
-wifi_df_non_null = wifi_df.loc[~wifi_df['x'].isnull(), :]
-print('2 wifi_df_non_null shape', wifi_df_non_null.shape)
 
 floor_int_dict = {'path_data_files':0, 'F1':1, 'F2':1, 'F3':2, 'F4':3, 'F5':4, 'F6':5, 'F7':6, 'F8':7}
 wifi_df['floor'] = wifi_df['floor'].map(floor_int_dict)
@@ -199,79 +197,43 @@ wifi_df['floor'] = wifi_df['floor'].map(floor_int_dict)
 # other_columns = ['floor', 'x', 'y', 'wp_ts', 'ts', 'path']
 other_columns = ['floor', 'x', 'y', 'wp_ts','ts', 'path']
 
-# site_info_df = wifi_df.loc[:, other_columns]
-# wifi_df_fp = wifi_df.drop(other_columns, axis=1)
-# print('wifi_df_fp_shape111', wifi_df_fp.shape)
-# print('wifi_df_fp null', pd.DataFrame(pd.isnull(wifi_df_fp).sum(axis=0)[]))
-# wifi_df_fp = wifi_df_fp.dropna(axis=0, how='all')
-# print('wifi_df_fp_shape222', wifi_df_fp.shape)
+all_null_df = pd.DataFrame(pd.isnull(wifi_df[wifi_df==-100]).sum(axis=0))
+all_null_cols = list(all_null_df[all_null_df[0]==0].index)
 
-# wifi_df_fp = wifi_df_fp.astype(float)
-# wifi_df = pd.concat([wifi_df_fp, site_info_df], axis=1)
+print('all_null_cols', all_null_cols, len(all_null_cols))
 
-print('after drop std zero cols', wifi_df.shape)
-
-std_df = pd.DataFrame(wifi_df.drop(other_columns, axis=1).std())
-std_zero_cols = list(std_df[(std_df[0]==0)|(std_df[0].isnull())].index)
-print('std_zero_cols', std_zero_cols)
-wifi_df = wifi_df.drop(std_zero_cols, axis=1)
-print('after drop std zero cols', wifi_df.shape)
+wifi_df = wifi_df.drop(all_null_cols, axis=1)
+print('111', wifi_df.shape)
 
 
-# all_null_df = pd.DataFrame(pd.isnull(wifi_df[wifi_df==-100]).sum(axis=0))
-# all_null_cols = list(all_null_df[all_null_df[0]==0].index)
-# print('all_null_cols', all_null_cols, len(all_null_cols))
-# wifi_df = wifi_df.drop(all_null_cols, axis=1)
-# print('after drop null cols', wifi_df.shape)
-
-# print(wifi_df.iloc[2178, 75], 1111111)
-mean = wifi_df.drop(other_columns, axis=1).mean().values
-# print('mean 341',mean.shape,  mean[341])
-std = wifi_df.drop(other_columns, axis=1).std().values
-# print('std 341', std[341])
+out_loc = np.where(wifi_df.values=='-1-100.0')
+print(out_loc, wifi_df.iloc[out_loc[0], out_loc[1]])
+mean = wifi_df.drop(other_columns, axis=1).astype(float).mean().values
+std = wifi_df.drop(other_columns, axis=1).astype(float).std().values
+print(mean.shape, std.shape, 2222)
 
 
 mean_x_y = wifi_df.loc[:,['x','y']].mean().values
 std_x_y = wifi_df.loc[:,['x','y']].std().values
 
-# min_x_y = wifi_df.loc[:,['x','y']].min().values
-# max_x_y = wifi_df.loc[:,['x','y']].max().values
-
-# validation_data_path = os.path.join(derived_data_path, 'validation_data')
-# with open(os.path.join(validation_data_path, 'validate_data_index_2020.json'), 'r+') as file:
-#     validation_index = json.load(file)
-# testing_data_path = os.path.join(derived_data_path, 'testing_data')
-# with open(os.path.join(testing_data_path, 'test_data_index_2020.json'), 'r+') as file:
-#     test_index = json.load(file)
-#
-# test_df = wifi_df.loc[test_index,:]
-#
-# uncorrelated_index = test_index + validation_index
-# wifi_df = wifi_df.drop(uncorrelated_index, axis=0)
-# print('len wifi_df incl. null', len(wifi_df))
-# print('non-null length before interpolation', len(wifi_df.loc[~wifi_df['wp_ts'].isnull(),:]))
-
 wifi_df_b = wifi_df.copy()
 
-# testing_data_path = os.path.join(derived_data_path, 'testing_data')
-# with open(os.path.join(testing_data_path, 'test_data_index_2021.json'), 'r+') as file:
-#     test_index = json.load(file)
-# wifi_df_b = wifi_df_b.drop(test_index, axis=0)
-
-# generate ours json file
 print('wifi_df_b', wifi_df_b.shape)
 if site == 'site4':
     seq_len = 5
-if site == 'site5':
+elif site == 'site5':
     seq_len = 5
 path_groups = wifi_df_b.groupby(['path'])
 print('len of paths', len(path_groups))
+
 path_len = []
 brits_data_path = os.path.join(derived_data_path, 'biseq')
 
 path_len_list = []
-with open(os.path.join(brits_data_path, 'wifi_biseq_{method}_{k}_eta_{eta}.json'.format(method=method, k=k, eta=eta)), 'w+') as file:
+with open(os.path.join(brits_data_path, 'wifi_biseq_{method}_{thre}.json'.format(method=args.method, thre=args.thre)), 'w+') as file:
     cnt = 0
+    sum_y_labels = 0
+    sum_eval_y_labels = 0
     for name, group in path_groups:
         group_df = pd.DataFrame(group)
         path_len_list.append(len(group_df))
@@ -284,22 +246,21 @@ with open(os.path.join(brits_data_path, 'wifi_biseq_{method}_{k}_eta_{eta}.json'
             ip_x_y = interpolate_rp(group_df_cp)
             for i in range(0, len(group_df)-seq_len):
                 group_df_cp = group_df.iloc[i:i+seq_len, :]
-                # print('group_df_cp shape', group_df_cp.shape)
+                print('group_df_cp shape', group_df_cp.shape)
                 xy_df = ip_x_y.iloc[i:i+seq_len, :]
-                # print('xy_df shape', xy_df.shape)
-                one_sample = transform_sample(group_df_cp, xy_df)
+                print('xy_df shape', xy_df.shape)
+                one_sample, len_y_labels, len_eval_y_labels  = transform_sample(group_df_cp, xy_df)
                 # one_sample = transform_sample(group_df_cp)
-
+                sum_y_labels = sum_y_labels + len_y_labels
+                sum_eval_y_labels = sum_eval_y_labels + len_eval_y_labels
                 rec = json.dumps(one_sample)
                 file.write(rec + '\n')
                 cnt += 1
 print('cnt lines', cnt)
+print('sum of eval y labels:', sum_eval_y_labels)
+print('sum of y labels:', sum_y_labels)
+print('test data rate:', round(sum_eval_y_labels/sum_y_labels, 4))
 
-print('wifi_df final shape', wifi_df.shape)
-
-#eta=0.1:  wifi_df final shape (4104, 519)
-#eta=0.2 wifi_df final shape (4104, 99)
-#eta=0.3 wifi_df final shape (4104, 35)
 
 
 

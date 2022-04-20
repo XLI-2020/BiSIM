@@ -1,1 +1,0 @@
-This is a demo for SIGMOD 2023!
