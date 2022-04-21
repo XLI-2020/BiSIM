@@ -13,15 +13,9 @@ class MySet(Dataset):
     def __init__(self, file_name):
         super(MySet, self).__init__()
         self.content = open(os.path.join(brits_data_path, file_name)).readlines()
-        print('content')
-        print(len(self.content)) # 400
-        # print(self.content[0])
         rec = json.loads(self.content[0])
-        print(rec.keys())
         forward_seq = rec['forward']
-        print('len forward seq', len(forward_seq))
         bkward_seq = rec['backward']
-        print('len bkward seq', len(bkward_seq))
         indices = np.arange(len(self.content))
         val_indices = np.random.choice(indices, len(self.content) // 5)
 
@@ -49,7 +43,6 @@ def collate_fn(recs):
         forwards = torch.FloatTensor(list(map(lambda r: list(map(lambda x: x['forwards'], r)), recs)))
         evals = torch.FloatTensor(list(map(lambda r: list(map(lambda x: x['evals'], r)), recs)))
         eval_masks = torch.FloatTensor(list(map(lambda r: list(map(lambda x: x['eval_masks'], r)), recs)))
-
         return {'values': values, 'forwards': forwards, 'masks': masks, 'deltas': deltas, 'evals':evals, 'eval_masks':eval_masks}
 
     ret_dict = {'forward': to_tensor_dict(forward), 'backward': to_tensor_dict(backward)}
@@ -61,7 +54,6 @@ def collate_fn(recs):
     ret_dict['eval_masks_y'] = torch.FloatTensor(list(map(lambda x: x['eval_masks_y'], recs)))
 
     ret_dict['eval_label'] = torch.FloatTensor(list(map(lambda x: x['eval_label'], recs)))
-    # ret_dict['is_train'] = torch.FloatTensor(list(map(lambda x: x['is_train'], recs)))
     return ret_dict
 
 def get_loader(batch_size = 64, method='cust', thre='0.1', shuffle = True):

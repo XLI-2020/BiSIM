@@ -9,48 +9,36 @@ import time
 import utils
 import argparse
 import sys
-sys.path.append('/home/xiao/Documents/WifiLocalization/WifiLocalization/')
 import data_loader, models
-import pandas as pd
-from sklearn import metrics
 import os
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--epochs', type = int, default = 500)
-parser.add_argument('--batch_size', type = int, default = 32)
-parser.add_argument('--model', type = str, default='brits')
+parser.add_argument('--epochs', type = int, default=500)
+parser.add_argument('--batch_size', type = int, default=32)
+parser.add_argument('--model', type = str, default='bisim')
 parser.add_argument('--site', type = str, default='site3')
 parser.add_argument('--method', type = str, default='akm')
-
 parser.add_argument('--att', type = str, default='none')
 parser.add_argument('--floor', type = str, default='F2')
-
 parser.add_argument('--thre', type = str, default='F2')
-
 parser.add_argument('--decay', type = str, default='en')
-
 parser.add_argument('--density', type = str, default='0')
 args = parser.parse_args()
 
 site = args.site
 floor_num = args.floor
-derived_data_path = '../../derived_data/{site}/{floor}'.format(site=site, floor=floor_num)
-brits_data_path = os.path.join(derived_data_path, 'biseq')
-
 
 train_epoch_loss = []
 inner_local_dist = []
 fp_mae_list = []
-fp_mre_list = []
 rp_mae_list = []
-rp_mre_list = []
 w_inner_local_dist = []
 
 p_rp_dist_list = []
 rp_dist_list = []
 def train(model):
     optimizer = optim.Adam(model.parameters(), lr=1e-3)
-    data_iter = data_loader_thre.get_loader(batch_size = args.batch_size, method=args.method, thre=args.thre)
+    data_iter = data_loader.get_loader(batch_size = args.batch_size, method=args.method, thre=args.thre)
     for epoch in range(args.epochs):
         model.train()
         run_loss = 0.0
@@ -70,27 +58,14 @@ def train(model):
 
         print('fp mae:')
         print(fp_mae_list)
-        
-        print('rp mae:')
-        print(rp_mae_list)
-
-        print('fp mre:')
-        print(fp_mre_list)
-
-        print('rp mre:')
-        print(rp_mre_list)
-
+        # print('rp mae:')
+        # print(rp_mae_list)
         print('rp dist:')
         print(rp_dist_list)
-
-        print('slice rp dist:')
-        print(p_rp_dist_list)
-
-        
         #min_inner_local_dist = list(sorted(inner_local_dist, key=lambda x: x['knn']))[0]
         print('min localization dist: knn, wknn', min(inner_local_dist), min(w_inner_local_dist))
         print('min rp dist:', min(rp_dist_list))
-        print('min slice rp dist:', min(p_rp_dist_list))
+        # print('min slice rp dist:', min(p_rp_dist_list))
 
 def evaluate(model, val_iter):
     model.eval()
@@ -166,29 +141,22 @@ def evaluate(model, val_iter):
     rp_dist_list.append(round(np.sum(sqrt_dist)/len(sqrt_dist), 6))
 
     fp_mae = np.abs(evals - imputations).mean()
-    fp_mre = np.abs(evals - imputations).sum() / np.abs(evals).sum()
-    rp_mae = np.abs(eval_label - decoded_y_list).mean()
-    rp_mre = np.abs(eval_label - decoded_y_list).sum() / np.abs(eval_label).sum()
-    print('fp_mae', fp_mae)
-    print('fp_mre', fp_mre)
-
-    print('rp_mae', rp_mae)
-    print('rp_mre', rp_mre)
+    # print('fp_mae', fp_mae)
 
     labels_y = np.array(labels)
-    print('labels', labels_y.shape)
+    # print('labels', labels_y.shape)
 
     pos_imputations = np.asarray(pos_imputations)
-    print('pos_imputations', pos_imputations.shape)
+    # print('pos_imputations', pos_imputations.shape)
 
     pos_decoded_y = np.asarray(pos_decoded_y)
-    print('pos_decoded_y', pos_decoded_y.shape)
+    # print('pos_decoded_y', pos_decoded_y.shape)
 
     pos_eval_masks_y = np.asarray(pos_eval_masks_y)
-    print('pos_eval_masks_y', pos_eval_masks_y.shape)
+    # print('pos_eval_masks_y', pos_eval_masks_y.shape)
 
     pos_eval_label = np.asarray(pos_eval_label)
-    print('pos_eval_label', pos_eval_label.shape)
+    # print('pos_eval_label', pos_eval_label.shape)
 
     pos_imputations = pos_imputations[:,-1,:]
     pos_decoded_y = pos_decoded_y[:,-1,:]
@@ -205,12 +173,8 @@ def evaluate(model, val_iter):
     p_rp_dist_list.append(round(np.sum(p_sqrt_dist)/len(p_sqrt_dist), 6))
 
     all_index = list(range(pos_imputations.shape[0]))
-
-
     test_index = np.unique(np.where(pos_eval_masks_y==1)[0])
     train_index = [i for i in all_index if i not in test_index]
-    print('test index', len(test_index))
-
     radio_map = pos_imputations[train_index]
     reference_points = pos_decoded_y[train_index]
 
@@ -228,28 +192,11 @@ def evaluate(model, val_iter):
     fingprint_sample = fingprint_sample.tolist()
     reference_points = reference_points.tolist()
     ground_points = ground_points.tolist()
-
-    # with open(os.path.join(brits_data_path, 'radio_map.json'), 'w+') as file:
-    #     json.dump(radio_map, file)
-    # with open(os.path.join(brits_data_path, 'reference_points.json'), 'w+') as file:
-    #     json.dump(reference_points, file)
-    # with open(os.path.join(brits_data_path, 'labels_y.json'), 'w+') as file:
-    #     json.dump(labels_y, file)
-    # with open(os.path.join(brits_data_path, 'masks_y.json'), 'w+') as file:
-    #     json.dump(masks_y, file)
-
     evaluted_res, wknn_dist = utils.get_localization_dist(radio_map, reference_points, fingprint_sample, ground_points)
     print('inner localization distance:', evaluted_res, wknn_dist)
-    #inner_local_dist.append(evaluted_res)
-
     inner_local_dist.append(evaluted_res)
-  
     w_inner_local_dist.append(wknn_dist)
-
     fp_mae_list.append(round(fp_mae, 6))
-    fp_mre_list.append(round(fp_mre, 6))
-    rp_mae_list.append(round(rp_mae, 6))
-    rp_mre_list.append(round(rp_mre, 6))
 
 
 def run():

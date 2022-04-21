@@ -238,17 +238,14 @@ with open(os.path.join(brits_data_path, 'wifi_biseq_{method}_{thre}.json'.format
         group_df = pd.DataFrame(group)
         path_len_list.append(len(group_df))
         group_df = group_df.sort_values(by='ts')
-        if len(group_df) < seq_len:
-            print('11111')
-            continue
-        else:
+        if len(group_df) >= seq_len:
             group_df_cp = group_df.copy()
             ip_x_y = interpolate_rp(group_df_cp)
             for i in range(0, len(group_df)-seq_len):
                 group_df_cp = group_df.iloc[i:i+seq_len, :]
-                print('group_df_cp shape', group_df_cp.shape)
+                # print('group_df_cp shape', group_df_cp.shape)
                 xy_df = ip_x_y.iloc[i:i+seq_len, :]
-                print('xy_df shape', xy_df.shape)
+                # print('xy_df shape', xy_df.shape)
                 one_sample, len_y_labels, len_eval_y_labels  = transform_sample(group_df_cp, xy_df)
                 # one_sample = transform_sample(group_df_cp)
                 sum_y_labels = sum_y_labels + len_y_labels
