@@ -77,17 +77,17 @@ def get_localization_dist(radio_map, reference_points, fingprint_sample, ground_
 def get_mean_var_db(method, site, floor, thre):
     site = site
     floor_num = floor
-    derived_data_path = '../../derived_data/{site}/{floor}'.format(site=site, floor=floor_num)
-    # wifi_df = pd.read_csv(os.path.join(derived_data_path, 'fp_filterd_F1.csv'), header=0)
+    data_root_path = '../data'
+    data_path = os.path.join(data_root_path, site)
     wifi_df = pd.read_csv(
-        os.path.join(derived_data_path,
-                     'fp_filterd_{site}_{floor}_{method}_{thre}.csv'.format(site=site, floor=floor_num, method=method,
+        os.path.join(data_path,
+                     'fp_filterd_{site}_{method}_{thre}.csv'.format(site=site, method=method,
                                                                             thre=thre)), header=0)
     floor_int_dict = {'path_data_files': 0, 'F1': 1, 'F2': 1, 'F3': 2, 'F4': 3, 'F5': 4, 'F6': 5, 'F7': 6, 'F8': 7}
     wifi_df['floor'] = wifi_df['floor'].map(floor_int_dict)
     all_null_df = pd.DataFrame(pd.isnull(wifi_df[wifi_df == -100]).sum(axis=0))
     all_null_cols = list(all_null_df[all_null_df[0] == 0].index)
-    print('all_null_cols', all_null_cols)
+    # print('all_null_cols', all_null_cols)
     wifi_df = wifi_df.drop(all_null_cols, axis=1)
     other_columns = ['floor', 'x', 'y', 'wp_ts', 'ts', 'path']
     mean = wifi_df.drop(other_columns, axis=1).mean().values
