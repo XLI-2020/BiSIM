@@ -15,14 +15,11 @@ import os
 parser = argparse.ArgumentParser()
 parser.add_argument('--epochs', type = int, default=500)
 parser.add_argument('--batch_size', type = int, default=32)
-parser.add_argument('--model', type = str, default='bisim')
-parser.add_argument('--site', type = str, default='site3')
+parser.add_argument('--site', type = str, default='KDM')
 parser.add_argument('--method', type = str, default='akm')
-parser.add_argument('--att', type = str, default='none')
-parser.add_argument('--floor', type = str, default='F2')
-parser.add_argument('--thre', type = str, default='F2')
-parser.add_argument('--decay', type = str, default='en')
-parser.add_argument('--density', type = str, default='0')
+parser.add_argument('--thre', type = float, default=0.1)
+# parser.add_argument('--decay', type = str, default='en')
+# parser.add_argument('--density', type = str, default='0')
 args = parser.parse_args()
 
 site = args.site
@@ -36,6 +33,7 @@ w_inner_local_dist = []
 
 p_rp_dist_list = []
 rp_dist_list = []
+#training model...
 def train(model):
     optimizer = optim.Adam(model.parameters(), lr=1e-3)
     data_iter = data_loader.get_loader(batch_size = args.batch_size, method=args.method, thre=args.thre)
@@ -58,15 +56,12 @@ def train(model):
 
         print('fp mae:')
         print(fp_mae_list)
-        # print('rp mae:')
-        # print(rp_mae_list)
         print('rp dist:')
         print(rp_dist_list)
-        #min_inner_local_dist = list(sorted(inner_local_dist, key=lambda x: x['knn']))[0]
         print('min localization dist: knn, wknn', min(inner_local_dist), min(w_inner_local_dist))
         print('min rp dist:', min(rp_dist_list))
-        # print('min slice rp dist:', min(p_rp_dist_list))
 
+# evaluate the MAE, Euclidean distance of RPs
 def evaluate(model, val_iter):
     model.eval()
     labels = []
@@ -86,10 +81,8 @@ def evaluate(model, val_iter):
         data = utils.to_var(data)
         ret = model.run_on_batch(data, None)
         label = ret['labels'].data.cpu().numpy()
-
         masks_y = ret['masks_y'].data.cpu().numpy()
         y_masks += masks_y.tolist()
-
         eval_masks = ret['eval_masks'].data.cpu().numpy()
         eval_ = ret['evals'].data.cpu().numpy()
         imputation = ret['imputations'].data.cpu().numpy()
@@ -98,30 +91,22 @@ def evaluate(model, val_iter):
         evals += eval_[np.where(eval_masks == 1)].tolist()
         imputations += imputation[np.where(eval_masks == 1)].tolist()
         pos_imputations += imputation.tolist()
-
-        print('imputations', len(imputations), len(evals))
+        # print('imputations', len(imputations), len(evals))
         eval_masks_y = ret['eval_masks_y'].data.cpu().numpy()
         pos_eval_masks_y += eval_masks_y.tolist()
-
         eval_label_ = ret['eval_label'].data.cpu().numpy()
         eval_label += eval_label_[np.where(eval_masks_y == 1)].tolist()
         pos_eval_label += eval_label_.tolist()
-
         eval_batch_index, eval_seq_index, eval_label_index = np.where(eval_masks_y == 1)
-        print(eval_batch_index,eval_seq_index,eval_label_index)
-
+        # print(eval_batch_index,eval_seq_index,eval_label_index)
         eval_label_points += eval_label_[eval_batch_index[::2], eval_seq_index[::2], :].tolist()
-
-
         decoded_y = ret['decoded_y'].data.cpu().numpy()
         decoded_y_list += decoded_y[np.where(eval_masks_y == 1)].tolist()
         pos_decoded_y += decoded_y.tolist()
-
         decode_batch_index, decode_seq_index, decode_label_index = np.where(eval_masks_y == 1)
-        print(decode_batch_index, decode_seq_index, decode_label_index)
         decoded_y_points += decoded_y[decode_batch_index[::2], decode_seq_index[::2], :].tolist()
 
-        print('decoded_y_list', len(decoded_y_list), len(eval_label))
+        # print('decoded_y_list', len(decoded_y_list), len(eval_label))
         labels += label.tolist()
 
 
@@ -132,39 +117,25 @@ def evaluate(model, val_iter):
 
     eval_label_points = np.asarray(eval_label_points)
     decoded_y_points = np.asarray(decoded_y_points)
-    print('eval_label_points', eval_label_points.shape, decoded_y_points.shape)
     eval_label_points = eval_label_points*std_x_y + mean_x_y
     decoded_y_points = decoded_y_points*std_x_y + mean_x_y
     sqrt_dist = np.sqrt(np.sum(np.square(eval_label_points-decoded_y_points),axis=1))
-    print('shape of sqrt_dist', sqrt_dist.shape)
-    print('points recover', np.sum(sqrt_dist)/len(sqrt_dist))
+    # print('shape of sqrt_dist', sqrt_dist.shape)
+    # print('points recover', np.sum(sqrt_dist)/len(sqrt_dist))
     rp_dist_list.append(round(np.sum(sqrt_dist)/len(sqrt_dist), 6))
 
     fp_mae = np.abs(evals - imputations).mean()
-    # print('fp_mae', fp_mae)
 
     labels_y = np.array(labels)
-    # print('labels', labels_y.shape)
-
     pos_imputations = np.asarray(pos_imputations)
-    # print('pos_imputations', pos_imputations.shape)
-
     pos_decoded_y = np.asarray(pos_decoded_y)
-    # print('pos_decoded_y', pos_decoded_y.shape)
-
     pos_eval_masks_y = np.asarray(pos_eval_masks_y)
-    # print('pos_eval_masks_y', pos_eval_masks_y.shape)
-
     pos_eval_label = np.asarray(pos_eval_label)
-    # print('pos_eval_label', pos_eval_label.shape)
-
     pos_imputations = pos_imputations[:,-1,:]
     pos_decoded_y = pos_decoded_y[:,-1,:]
     pos_eval_masks_y = pos_eval_masks_y[:,-1,:]
     pos_eval_label = pos_eval_label[:,-1,:]
-
     bt_index = np.unique(np.where(pos_eval_masks_y==1)[0])
-
     points_eval_label = pos_eval_label[bt_index]
     points_eval_decode_y = pos_decoded_y[bt_index]
     points_eval_label = points_eval_label*std_x_y + mean_x_y
@@ -180,13 +151,10 @@ def evaluate(model, val_iter):
 
     fingprint_sample = pos_imputations[test_index]
     ground_points = pos_eval_label[test_index]
-
-
     radio_map = radio_map*std + mean
     fingprint_sample = fingprint_sample*std + mean
     reference_points = reference_points*std_x_y + mean_x_y
     ground_points = ground_points*std_x_y + mean_x_y
-
 
     radio_map = radio_map.tolist()
     fingprint_sample = fingprint_sample.tolist()
@@ -200,7 +168,7 @@ def evaluate(model, val_iter):
 
 
 def run():
-    model = getattr(models, args.model).Model()
+    model = getattr(models, 'bisim').Model()
 
     if torch.cuda.is_available():
         model = model.cuda()

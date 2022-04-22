@@ -1,26 +1,16 @@
 import torch
 import torch.nn as nn
-import torch.nn.functional as F
-import torch.optim as optim
 from torch.autograd import Variable
-from torch.nn.parameter import Parameter
-import math
-import argparse
-import sys
 import sim
-
 
 RNN_HID_SIZE = 64
 class Model(nn.Module):
     def __init__(self):
         super(Model, self).__init__()
         self.build()
-
     def build(self):
         self.sim_f = sim.Model()
         self.sim_b = sim.Model()
-
-
     def forward(self, data):
         ret_f = self.sim_f(data, 'forward')
         ret_b = self.reverse(self.sim_b(data, 'backward'))

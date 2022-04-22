@@ -1,34 +1,18 @@
 # coding: utf-8
-# 层次聚类
 import math
 import numpy as np
-from sklearn import datasets
-from sklearn import cluster
 from geo_analyze import geo_referencing,plot_points, plot_shape
 from shapely.geometry import shape, GeometryCollection, Polygon, MultiPolygon, MultiPoint
 import pandas as pd
 
 
 def euler_distance(point1: np.ndarray, point2: list) -> float:
-    """
-    计算两点之间的欧拉距离，支持多维
-    """
     distance = 0.0
     for a, b in zip(point1, point2):
         distance += math.pow(a - b, 2)
     return math.sqrt(distance)
-
-
 class ClusterNode(object):
     def __init__(self, vec, pts, left=None, right=None, distance=-1, id=None, count=1):
-        """
-        :param vec: 保存两个数据聚类后形成新的中心
-        :param left: 左节点
-        :param right:  右节点
-        :param distance: 两个节点的距离
-        :param id: 用来标记哪些节点是计算过的
-        :param count: 这个节点的叶子节点个数
-        """
         self.vec = vec
         self.pts = pts
         self.left = left
@@ -36,9 +20,6 @@ class ClusterNode(object):
         self.distance = distance
         self.id = id
         self.count = count
-
-
-
 class Hierarchical(object):
     def __init__(self, k = 1):
         assert k > 0
@@ -68,7 +49,6 @@ class Hierarchical(object):
                     if (d < min_dist) and self.is_able_to_be_clustered(nodes[i], nodes[j]):
                         min_dist = d
                         closest_part = (i, j)
-            # 合并两个聚类
             if min_dist < math.inf:
                 part1, part2 = closest_part
                 node1, node2 = nodes[part1], nodes[part2]
@@ -88,17 +68,10 @@ class Hierarchical(object):
         self.calc_label()
 
     def calc_label(self):
-        """
-        调取聚类的结果
-        """
         for i, node in enumerate(self.nodes):
-            # 将节点的所有叶子节点都分类
             self.leaf_traversal(node, i)
 
     def leaf_traversal(self, node: ClusterNode, label):
-        """
-        递归遍历叶子节点
-        """
         if node.left == None and node.right == None:
             self.labels[node.id] = label
         if node.left:
@@ -144,32 +117,32 @@ def find_waypoint(t, wp_df):
     if not target_row.empty:
         x = target_row.loc[0,'x'] + ((target_row.loc[0,'a_x']-target_row.loc[0,'x'])/(target_row.loc[0,'a_ts']-target_row.loc[0,'wp_ts']))*(t-target_row.loc[0,'wp_ts'])
         y = target_row.loc[0,'y'] + ((target_row.loc[0,'a_y']-target_row.loc[0,'y'])/(target_row.loc[0,'a_ts']-target_row.loc[0,'wp_ts']))*(t-target_row.loc[0,'wp_ts'])
-        print('target_row', x, y)
+        # print('target_row', x, y)
         return x, y
     else:
         wp_df = wp_df.drop_duplicates(subset=['wp_ts', 'x', 'y'])
         wp_df = wp_df.reset_index(drop=True)
         if len(wp_df)>=2:
             if t <= wp_df.loc[0,'wp_ts']:
-                print('t',t)
-                print('wp_df', wp_df)
+                # print('t',t)
+                # print('wp_df', wp_df)
                 x = wp_df.loc[0,'x'] - ((wp_df.loc[1, 'x'] - wp_df.loc[0, 'x']) * (wp_df.loc[0,'wp_ts'] - t))/(wp_df.loc[1, 'wp_ts'] - wp_df.loc[0, 'wp_ts'])
                 y = wp_df.loc[0,'y'] - ((wp_df.loc[1, 'y'] - wp_df.loc[0, 'y']) * (wp_df.loc[0,'wp_ts'] - t))/(wp_df.loc[1, 'wp_ts'] - wp_df.loc[0, 'wp_ts'])
-                print('approach 111', x,y)
+                # print('approach 111', x,y)
             else:
                 x = ((wp_df.loc[len(wp_df)-1,'x'] - wp_df.loc[len(wp_df)-2,'x'])*(t - wp_df.loc[len(wp_df)-1,'wp_ts']))/(wp_df.loc[len(wp_df)-1,'wp_ts'] - wp_df.loc[len(wp_df)-2,'wp_ts']) +  wp_df.loc[len(wp_df)-1,'x']
                 y = ((wp_df.loc[len(wp_df)-1,'y'] - wp_df.loc[len(wp_df)-2,'y'])*(t - wp_df.loc[len(wp_df)-1,'wp_ts']))/(wp_df.loc[len(wp_df)-1,'wp_ts'] - wp_df.loc[len(wp_df)-2,'wp_ts']) +  wp_df.loc[len(wp_df)-1,'y']
-                print('approach 222', x, y)
+                # print('approach 222', x, y)
         else:
-            print('wp_df', wp_df)
+            # print('wp_df', wp_df)
             if t <= wp_df.loc[0,'wp_ts']:
                 x = wp_df.loc[0,'x'] - (wp_df.loc[0,'wp_ts']-t)*1
                 y = wp_df.loc[0,'y'] - (wp_df.loc[0,'wp_ts']-t)*1
-                print('approach 333', x, y)
+                # print('approach 333', x, y)
             else:
                 x = (t - wp_df.loc[0,'wp_ts'])*1 + wp_df.loc[0,'x']
                 y = (t - wp_df.loc[0,'wp_ts'])*1 + wp_df.loc[0,'y']
-                print('approach 444', x, y)
+                # print('approach 444', x, y)
         return x, y
 
 
@@ -177,10 +150,10 @@ def interpolate_rp(group_df):
     ori_shape = group_df.shape
     ori_index = group_df.index
     have_wp_df = group_df.loc[~group_df['wp_ts'].isnull(), :]
-    print('have_wp_df shape', have_wp_df.shape)
+    # print('have_wp_df shape', have_wp_df.shape)
     wp_df = have_wp_df.loc[:, ['wp_ts', 'x', 'y']]
     have_null_wp_df = group_df.loc[group_df['wp_ts'].isnull(), :]
-    print('have_null_wp_df shape', have_null_wp_df.shape)
+    # print('have_null_wp_df shape', have_null_wp_df.shape)
     if not have_null_wp_df.empty:
         for index, row in have_null_wp_df.iterrows():
             ts = int(row['ts'])
@@ -196,25 +169,10 @@ def interpolate_rp(group_df):
     group_df = pd.concat([have_wp_df, have_null_wp_df], axis=0)
     group_df = group_df.loc[ori_index,:]
     post_shape = group_df.shape
-    print(ori_shape, post_shape)
+    # print(ori_shape, post_shape)
     assert (ori_shape[0]==post_shape[0]) & (ori_shape[1]==post_shape[1]), 'error'
     ip_x_y = group_df.loc[:, :]
     return ip_x_y
-
-
-
-
-
-# iris = datasets.load_iris()
-# print(type(iris.data))
-# print(iris.data.shape)
-# my = Hierarchical(4)
-# my.fit(iris.data)
-# print(np.array(my.labels))
-# sk = cluster.AgglomerativeClustering(4, linkage='average')
-# sk.fit(iris.data)
-# print(sk.labels_.tolist())
-
 
 
 

@@ -10,15 +10,15 @@ from skimage.morphology import convex_hull_image
 import matplotlib.pyplot as plt
 import json
 import itertools
+import os
 
-import plotly.graph_objs as go
-import glob
-import random
-site = 'site4'
-floor = 'F1'
-geojson_file = '../data/%s/%s/geojson_map.json' % (site, floor)
-infos_file = '../data/%s/%s/floor_info.json' % (site, floor)
-image_file = '../data/%s/%s/floor_image.png' % (site, floor)
+site = 'KDM'
+data_root_path = '../imputation/data/'
+data_path = os.path.join(data_root_path, site)
+
+geojson_file = '../imputation/data/%s/topo/geojson_map.json' % (site)
+infos_file = '../imputation/data/%s/topo/floor_info.json' % (site)
+image_file = '../imputation/data/%s/topo/floor_image.png' % (site)
 
 image = Image.open(image_file)
 with open(infos_file, 'rb') as f:
@@ -39,7 +39,6 @@ def extract_coords_from_polygon(polygon):
         for interior in polygon.interiors:
             x, y = interior.xy
             coords.append((np.array(x), np.array(y)))
-
     return coords
 
 def get_bounding_box(x, y):
@@ -67,13 +66,10 @@ def plot_shape(shapes, color):
         shapes = [shapes]
     for shape in shapes:
         plt.fill(*shape.exterior.xy, color='white')
-
         for interior in shape.interiors:
             # plt.plot(*interior.xy, c=color)
             plt.fill(*interior.xy, color='whitesmoke')
             plt.plot(*interior.xy, c='black', linewidth=0.5)
-
-
         plt.plot(*shape.exterior.xy, c='black', linewidth=0.5)
 
 
@@ -132,11 +128,6 @@ def extract_geojson_bounding_box(floor_layout):
 
 
 def find_translation(points_a, points_b):
-    """
-    Find best translation between 2 sets of points
-    Map right coefficients for:
-    https://shapely.readthedocs.io/en/stable/manual.html#shapely.affinity.affine_transform
-    """
     trans = nudged.estimate(points_a, points_b)
     matrix_cooefs = np.ravel(trans.get_matrix())
 
@@ -153,11 +144,6 @@ def find_translation(points_a, points_b):
 
 
 def geo_referencing():
-    """
-    :param image: raw PIL image object
-    :param geojson: dict, geojson format
-    :param info: dict, plan infos
-    """
     # Extract floor layout and corridor geometries from geojson (shapely Polygon/MultiPolygon)
     floor_layout, corridor = extract_geometries(geojson)
     # Extract bounding boxes both from image and geojson (Using convexhull)
@@ -181,57 +167,4 @@ def geo_referencing():
     print('translated_corridor', translated_corridor)
     return translated_corridor
 
-# geometry = geo_referencing()
-# print('geometry', geometry)
-# plot_shape(geometry)
-
-# plot_shape_and_points(geometry, [(1,1), (10,10), (50, 50)])
-
-
-# plt.show()
-
-
-# fig = go.Figure()
-#
-# fig.update_layout(
-#     images=[
-#         go.layout.Image(
-#             source=image,
-#             xref="x",
-#             yref="y",
-#             x=0,
-#             y=infos["map_info"]["height"],
-#             sizex=infos["map_info"]["width"],
-#             sizey=infos["map_info"]["height"],
-#             sizing="contain",
-#             opacity=1,
-#             layer="below",
-#         )
-#     ]
-# )
-#
-# for coord in extract_coords_from_polygon(geometry):
-#     x, y = coord
-#     fig.add_trace(
-#         go.Scattergl(
-#             x=x,
-#             y=y,
-#         ))
-#
-# # configure
-# fig.update_xaxes(autorange=False, range=[0, infos["map_info"]["width"]])
-# fig.update_yaxes(autorange=False, range=[0, infos["map_info"]["height"]], scaleanchor="x", scaleratio=1)
-# fig.update_layout(
-#     title=go.layout.Title(
-#         text="Site: %s Floor: %s" % (site, floor),
-#         xref="paper",
-#         x=0,
-#     ),
-#     autosize=True,
-#     width=900,
-#     height=200 + 900 * infos["map_info"]["height"] / infos["map_info"]["width"],
-#     template="plotly_white",
-# )
-#
-# fig.show()
 

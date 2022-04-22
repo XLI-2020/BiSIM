@@ -4,15 +4,13 @@ import numpy as np
 import torch
 from torch.utils.data import Dataset, DataLoader
 
-site = 'site4' 
-floor_num = 'F1'
-derived_data_path = '../../derived_data/{site}/{floor}'.format(site=site, floor=floor_num)
-brits_data_path = os.path.join(derived_data_path, 'biseq')
+site = 'KDM'
+data_path = './data/{site}/'.format(site=site)
 
 class MySet(Dataset):
     def __init__(self, file_name):
         super(MySet, self).__init__()
-        self.content = open(os.path.join(brits_data_path, file_name)).readlines()
+        self.content = open(os.path.join(data_path, file_name)).readlines()
         rec = json.loads(self.content[0])
         forward_seq = rec['forward']
         bkward_seq = rec['backward']

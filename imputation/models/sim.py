@@ -72,10 +72,8 @@ class FeatureRegression(nn.Module):
     def build(self, input_size):
         self.W = Parameter(torch.Tensor(input_size, input_size))
         self.b = Parameter(torch.Tensor(input_size))
-
         m = torch.ones(input_size, input_size) - torch.eye(input_size, input_size)
         self.register_buffer('m', m)
-
         self.reset_parameters()
 
     def reset_parameters(self):
@@ -103,7 +101,6 @@ class TemporalDecay(nn.Module):
             assert(input_size == output_size)
             m = torch.eye(input_size, input_size)
             self.register_buffer('m', m)
-
         self.reset_parameters()
 
     def reset_parameters(self):
@@ -135,12 +132,8 @@ class Model(nn.Module):
 
         self.hist_reg = nn.Linear(RNN_HID_SIZE, FEATURE_LEN)
         self.feat_reg = FeatureRegression(FEATURE_LEN)
-
-
         self.ATT = Attention(enc_hid_dim=ENC_HID_SIZE, dec_hid_dim=RNN_HID_SIZE)
         self.enc_fc = nn.Linear(RNN_HID_SIZE, ENC_HID_SIZE)
-
- 
         self.weight_combine = nn.Linear(FEATURE_LEN*2, FEATURE_LEN)
 
         self.dropout = nn.Dropout(p = 0.25)
@@ -152,7 +145,6 @@ class Model(nn.Module):
             return tensor_
         indices = range(tensor_.size()[1])[::-1]
         indices = Variable(torch.LongTensor(indices), requires_grad=False)
-
         if torch.cuda.is_available():
             indices = indices.cuda()
         return tensor_.index_select(1, indices)
@@ -183,16 +175,14 @@ class Model(nn.Module):
         y_loss = 0.0
         imputations = []
         y_decoder_list = []
-
         enc_hid_output = []
-
         #Encoder part
         for t in range(SEQ_LEN):
             x = values[:, t, :]
             m = masks[:, t, :]
             d = deltas[:, t, :]
             gamma_h = self.temp_decay_h(d)
-            print('h ori', h.shape)
+            # print('h ori', h.shape)
             h_ori = copy.copy(h)
             h = h * gamma_h
             x_h = self.hist_reg(h)
@@ -206,7 +196,6 @@ class Model(nn.Module):
             inputs = torch.cat([x_c, m], dim = 1)
             h, c = self.rnn_cell(inputs, (h, c))
             imputations.append(x_c.unsqueeze(dim = 1))
-
         y_h = self.out(h)
         enc_hid_output = torch.cat(enc_hid_output, dim=1)
         temp_y_loss = F.mse_loss(y_h*masks_yy[:, 0, :], labels[:,0,:]* masks_yy[:, 0, :])/(torch.sum(masks_yy[:, 0, :]) + 1e-5)
