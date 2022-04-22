@@ -37,6 +37,11 @@ site: the building, e.g., KDM or WDS.
 method: the differentiator, e.g., akm or tac.
 
 thre: the in-cluster differentiation threshold, e.g., thre=0, 0.1, 0.2.
+
+batch_size: the number of samples for back propagation in one pass
+
+epochs: the number of training rounds
+
 # Other Information
 The whole dataset could be found from  [here](https://www.kaggle.com/c/indoor-location-navigation/data?select=train)
 
