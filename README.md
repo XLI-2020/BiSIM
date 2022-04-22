@@ -34,7 +34,7 @@ cd ../ ; nohup python3 -u main.py --site KDM --method akm --thre 0.1 --epochs  5
 # Explaination of Parameters
 site: the building, e.g., KDM or WDS.
 
-method: the differentiator, e.g., akm or tac.
+method:  the differentiator, e.g., akm or tac.
 
 thre: the in-cluster differentiation threshold, e.g., thre=0, 0.1, 0.2.
 
