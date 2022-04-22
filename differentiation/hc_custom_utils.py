@@ -30,7 +30,7 @@ class Hierarchical(object):
     def fit(self, x):
         nodes = [ClusterNode(vec=v[:-2], id=i, pts=tuple(v[-2:])) for i,v in enumerate(x)]
         distances = {}
-        point_num, future_num = np.shape(x)  # 特征的维度
+        point_num, future_num = np.shape(x)
         future_num = future_num - 2
         self.labels = [ -1 ] * point_num
         currentclustid = -1
@@ -38,10 +38,9 @@ class Hierarchical(object):
         while min_dist < math.inf:
             min_dist = math.inf
             nodes_len = len(nodes)
-            closest_part = None  # 表示最相似的两个聚类
+            closest_part = None
             for i in range(nodes_len - 1):
                 for j in range(i + 1, nodes_len):
-                    # 为了不重复计算距离，保存在字典内
                     d_key = (nodes[i].id, nodes[j].id)
                     if d_key not in distances:
                         distances[d_key] = euler_distance(nodes[i].vec, nodes[j].vec)
@@ -62,7 +61,7 @@ class Hierarchical(object):
                                        id=currentclustid,
                                        count=node1.count + node2.count)
                 currentclustid -= 1
-                del nodes[part2], nodes[part1]   # 一定要先del索引较大的
+                del nodes[part2], nodes[part1]
                 nodes.append(new_node)
         self.nodes = nodes
         self.calc_label()

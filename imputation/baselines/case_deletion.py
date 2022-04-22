@@ -10,18 +10,12 @@ from sklearn.model_selection import train_test_split
 import math
 import sys
 import random
-site = 'site5'
-floor_num = 'F4'
+site = 'KDM'
+data_root_path = '../data'
+data_path = os.path.join(data_root_path, site)
+wifi_df = pd.read_csv(os.path.join(data_path, 'fp_samples'), header=0)
 
-derived_data_path = '../derived_data/{site}/{floor}'.format(site=site, floor=floor_num)
-
-wifi_df = pd.read_csv(os.path.join(derived_data_path, 'fp_sample_{}.csv'.format(floor_num)), header=0)
-
-print(wifi_df.shape)
 wifi_df = wifi_df.loc[~wifi_df['wp_ts'].isnull(),:]
-print(wifi_df.shape)
-
-
 FEATURE_LEN = wifi_df.shape[1] - 6
 wifi_df = wifi_df.sample(frac=1, random_state=2021)
 wifi_df = wifi_df.fillna(-100)
@@ -31,18 +25,15 @@ test_df = wifi_df.tail(int(len(wifi_df)*0.2))
 print('test_df shape', test_df.shape)
 test_index = list(test_df.index)
 
-testing_data_path = os.path.join(derived_data_path, 'testing_data')
+testing_data_path = os.path.join(data_path, 'testing_data')
 if not os.path.exists(testing_data_path):
     os.mkdir(testing_data_path)
 with open(os.path.join(testing_data_path, 'test_data_index_2021.json'), 'w+') as file:
     json.dump(test_index, file)
 
 X_train = train_df.iloc[:,:FEATURE_LEN].astype(float).values
-print('X_train', X_train.shape)
 Y_train = train_df.loc[:, ['x', 'y']].astype(float).values
-
 X_test = test_df.iloc[:,:FEATURE_LEN].astype(float).values
-
 Y_test = test_df.loc[:, ['x', 'y']].astype(float).values
 
 def dist(p1, p2):

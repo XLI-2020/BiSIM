@@ -1,5 +1,4 @@
-import numpy as np # linear algebra
-import pandas as pd # data processing, CSV file I/O (e.g. pd.read_csv)
+
 import copy
 from shapely.geometry import shape, GeometryCollection, Polygon, MultiPolygon
 from shapely.affinity import affine_transform
@@ -88,9 +87,7 @@ def extract_geometries(geojson):
     # Extract shops geometry (remaining ones)
     shops = copy.deepcopy(geojson)
     shops['features'] = shops['features'][1:]
-    # print(shops['features'])
     shops_geometry = GeometryCollection([shape(feature["geometry"]).buffer(0.1) for feature in shops['features']])
-    # print(shops_geometry)
 
     # Geometry differences to get corridor (floor layout - shops)
     corridor = copy.deepcopy(floor_layout)

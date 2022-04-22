@@ -13,22 +13,24 @@ import random
 from fancyimpute import NuclearNormMinimization, MatrixFactorization, IterativeImputer
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.svm import SVR
-site = 'site4'
-floor_num = 'F1'
+
+
+site = 'KDM'
+data_root_path = '../data'
+data_path = os.path.join(data_root_path, site)
+wifi_df = pd.read_csv(os.path.join(data_path, 'fp_samples'), header=0)
 method = 'thac'
 thre = 0.1
-derived_data_path = '../../derived_data/{site}/{floor}'.format(site=site, floor=floor_num)
-wifi_df = pd.read_csv(os.path.join(derived_data_path, 'fp_filterd_{site}_{floor}_{method}_{thre}.csv'.format(site=site, floor=str(floor_num), method=method, thre=str(thre))), header=0)
+wifi_df = pd.read_csv(os.path.join(data_path, 'fp_filterd_{site}_{floor}_{method}_{thre}.csv'.format(site=site, method=method, thre=str(thre))), header=0)
 
-testing_data_path = os.path.join(derived_data_path, 'testing_data')
-
-
+testing_data_path = os.path.join(data_path, 'testing_data')
 num_of_test_samples = 28
 non_null_wifi_df = wifi_df.loc[~wifi_df['x'].isnull(), :].sample(frac=1).iloc[:num_of_test_samples, :]
-print('non_null_wifi_df', non_null_wifi_df.shape)
 test_index = non_null_wifi_df.index
-print('test data samples:', wifi_df.loc[test_index[:3], ['x', 'y']])
 
+testing_data_path = os.path.join(data_path, 'testing_data')
+with open(os.path.join(testing_data_path, 'test_data_index_2021.json'), 'r+') as file:
+    test_all_index = json.load(file)
 
 FEATURE_LEN = wifi_df.shape[1] - 6
 test_index = test_index[:28]
@@ -49,7 +51,6 @@ std_x_y = wifi_df.loc[:,['x','y']].std().values
 feature_df = (feature_df - mean)/std
 xy_df = (xy_df - mean_x_y)/std_x_y
 
-# produce some null values for fp and rp
 X = pd.concat([feature_df, xy_df], axis=1)
 
 X_index = X.index
@@ -103,7 +104,6 @@ Y_train = Y_train * std_x_y + mean_x_y
 X_test = test_df.iloc[:,:FEATURE_LEN].astype(float).values
 X_test = X_test * std + mean
 
-# X_test = test_df.iloc[:,:FEATURE_LEN].apply(lambda x:pow(10, x/10)).astype(float).values
 
 Y_test = test_df_xy.loc[:, ['x', 'y']].astype(float).values
 print('Y_test', Y_test.shape)

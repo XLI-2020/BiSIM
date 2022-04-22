@@ -34,13 +34,15 @@ def knn_position(X_train, Y_train, X_test, Y_test):
     avg_dist = compare_dist_between_two_points_list(Y_pre, Y_test)
     return avg_dist
 
-site = 'site4'
-floor_num = 'F1'
-derived_data_path = '../../derived_data/{site}/{floor}'.format(site=site, floor=floor_num)
-# wifi_df = pd.read_csv(os.path.join(derived_data_path, 'fp_filterd_{}.csv'.format(floor_num)), header=0)
-wifi_df = pd.read_csv(os.path.join(derived_data_path, 'fp_sample_{}.csv'.format(floor_num)), header=0)
+site = 'KDM'
+data_root_path = '../data'
+data_path = os.path.join(data_root_path, site)
+wifi_df = pd.read_csv(os.path.join(data_path, 'fp_samples'), header=0)
+method = 'thac'
+thre = 0.1
+wifi_df = pd.read_csv(os.path.join(data_path, 'fp_filterd_{site}_{floor}_{method}_{thre}.csv'.format(site=site, method=method, thre=str(thre))), header=0)
 
-testing_data_path = os.path.join(derived_data_path, 'testing_data')
+testing_data_path = os.path.join(data_path, 'testing_data')
 with open(os.path.join(testing_data_path, 'test_data_index_2021.json'), 'r+') as file:
     test_all_index = json.load(file)
 

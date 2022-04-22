@@ -12,17 +12,13 @@ import random
 from fancyimpute import NuclearNormMinimization, MatrixFactorization, IterativeImputer
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.svm import SVR
-
-
-site = 'site5'
-floor_num = 'F4'
+site = 'KDM'
+data_root_path = '../data'
+data_path = os.path.join(data_root_path, site)
+wifi_df = pd.read_csv(os.path.join(data_path, 'fp_samples'), header=0)
 method = 'thac'
 thre = 0.1
-derived_data_path = '../../derived_data/{site}/{floor}'.format(site=site, floor=floor_num)
-wifi_df = pd.read_csv(os.path.join(derived_data_path, 'fp_filterd_{site}_{floor}_{method}_{thre}.csv'.format(site=site, floor=str(floor_num), method=method, thre=str(thre))), header=0)
-# wifi_df = pd.read_csv(os.path.join(derived_data_path, 'fp_sample_{floor}.csv'.format(floor=str(floor_num))), header=0)
-
-
+wifi_df = pd.read_csv(os.path.join(data_path, 'fp_filterd_{site}_{floor}_{method}_{thre}.csv'.format(site=site, method=method, thre=str(thre))), header=0)
 print('wifi_df', wifi_df.shape)
 num_of_test_samples = 28
 non_null_wifi_df = wifi_df.loc[~wifi_df['x'].isnull(), :].sample(frac=1).iloc[:num_of_test_samples, :]
@@ -30,11 +26,10 @@ print('non_null_wifi_df', non_null_wifi_df.shape)
 test_index = non_null_wifi_df.index
 
 print('test data samples:', wifi_df.loc[test_index[:3], ['x', 'y']])
+testing_data_path = os.path.join(data_path, 'testing_data')
+with open(os.path.join(testing_data_path, 'test_data_index_2021.json'), 'r+') as file:
+    test_all_index = json.load(file)
 
-# brits_data_path = os.path.join(derived_data_path, 'biseq')
-# with open(os.path.join(brits_data_path, 'val_path_names.json'), 'r+') as file:
-#     path_names = json.load(file)
-# test_index = wifi_df.loc[(wifi_df['path'].isin(path_names))&(~wifi_df['wp_ts'].isnull()),:].index
 FEATURE_LEN = wifi_df.shape[1] - 6
 test_index = test_index[:]
 test_df_xy = wifi_df.loc[test_index, ['x', 'y']]
@@ -79,7 +74,7 @@ x_mice_col_list = []
 for j in range(nb_ft_bs):
     print('j:,{j}'.format(j=j))
     x = X[:, j * batch_size: (j + 1) * batch_size]
-    print('x shaope', x.shape)
+    print('x shape', x.shape)
     x_mice_col = mice.fit_transform(x)
     print('x_mice_col shape', x_mice_col.shape)
     x_mice_col_list.append(x_mice_col)

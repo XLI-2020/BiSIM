@@ -79,7 +79,6 @@ def get_mean_var_db(method, site, floor, thre):
     wifi_df = pd.read_csv(os.path.join(data_path, 'fp_filterd_{site}_{method}_{thre}.csv'.format(site=site, method=method, thre=thre)), header=0)
     all_null_df = pd.DataFrame(pd.isnull(wifi_df[wifi_df == -100]).sum(axis=0))
     all_null_cols = list(all_null_df[all_null_df[0] == 0].index)
-    # print('all_null_cols', all_null_cols)
     wifi_df = wifi_df.drop(all_null_cols, axis=1)
     other_columns = ['floor', 'x', 'y', 'wp_ts', 'ts', 'path']
     mean = wifi_df.drop(other_columns, axis=1).mean().values

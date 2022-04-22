@@ -14,19 +14,19 @@ You may use " pip3 install -r requirements.txt" to install the above libraries.
 
 
 # Usage
-Step 1: differentiate MARs and MNARs
+**Step 1**: differentiate MARs and MNARs
 ``` 
 cd ./differentiation ; python3 differentiator.py --site KDM --method akm --thre 0.1
 ```
 after this step, a csv file with differentiated results will be generated in the data folder.
 
-Step 2: generate a json file for the input of BiSIM
+**Step 2**: generate a json file for the input of BiSIM
 ``` 
 cd ../imputation/preprocess ; python3 json_generate_cust_thre.py --site KDM --method akm --thre 0.1 
 ```
 An input file in json format will be generated in the data folder.
 
-Step 3:  run BiSIM model for imputation
+**Step 3**:  run BiSIM model for imputation
 ``` 
 cd ../ ; nohup python3 -u main.py --site KDM --method akm --thre 0.1 --epochs  500 --batch_size 32 > performance.log & 
 ```
@@ -40,7 +40,7 @@ thre: the in-cluster differentiation threshold, e.g., thre=0, 0.1, 0.2.
 # Other Information
 The whole dataset could be found from  [here](https://www.kaggle.com/c/indoor-location-navigation/data?select=train)
 
-The code for BRITS is available in [here](https://github.com/NIPS-BRITS/BRITS)
+The code for BRITS is available in [here](https://github.com/caow13/BRITS)
 
 
 

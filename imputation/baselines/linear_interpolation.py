@@ -25,19 +25,15 @@ def find_waypoint(t, wp_df):
     else:
         return None, None
 
-site = 'site5'
-floor_num = 'F4'
-derived_data_path = '../derived_data/{site}/{floor}'.format(site=site, floor=floor_num)
-wifi_df = pd.read_csv(os.path.join(derived_data_path, 'fp_sample_{}.csv'.format(floor_num)), header=0)
-
-testing_data_path = os.path.join(derived_data_path, 'testing_data')
+site = 'KDM'
+data_root_path = '../data'
+data_path = os.path.join(data_root_path, site)
+wifi_df = pd.read_csv(os.path.join(data_path, 'fp_samples'), header=0)
+testing_data_path = os.path.join(data_path, 'testing_data')
 with open(os.path.join(testing_data_path, 'test_data_index_2021.json'), 'r+') as file:
     test_index = json.load(file)
-
-
 FEATURE_LEN = wifi_df.shape[1] - 6
 print('FEATURE_LEN', FEATURE_LEN)
-
 test_index = test_index[:]
 test_df = wifi_df.loc[test_index,:]
 print('test_index', len(test_index))
@@ -45,9 +41,6 @@ print('len of wifi df', len(wifi_df))
 
 wifi_df = wifi_df.drop(test_index, axis=0)
 
-
-print('wifi_df after drop test index', wifi_df.shape)
-print('non-null length before interpolation', len(wifi_df.loc[~wifi_df['x'].isnull(),:]))
 ### interpolation
 path_groups = wifi_df.groupby(['path'])
 print('len of paths', len(path_groups))
@@ -74,13 +67,9 @@ for path, group in path_groups:
 
 wifi_df_interpolated = pd.concat(lp_list, axis=0)
 
-print('non-null length after interpolation', len(wifi_df_interpolated.loc[~wifi_df_interpolated['x'].isnull(),:]))
 
 wifi_df_in = wifi_df_interpolated.loc[~wifi_df_interpolated['wp_ts'].isnull(),:]
-print('wifi df after interpolation', wifi_df_in.shape)
-
 train_index = list(set(list(wifi_df_in.index)))
-
 train_df = wifi_df_in.loc[train_index,:]
 
 
@@ -89,12 +78,8 @@ train_df = train_df.fillna(-100)
 
 ### evaluation
 X_train = train_df.iloc[:,:FEATURE_LEN].astype(float).values
-
-
 Y_train = train_df.loc[:, ['x', 'y']].astype(float).values
-
 X_test = test_df.iloc[:,:FEATURE_LEN].astype(float).values
-
 Y_test = test_df.loc[:, ['x', 'y']].astype(float).values
 
 
