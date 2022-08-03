@@ -16,25 +16,25 @@ You may use " pip3 install -r requirements.txt" to install the above libraries.
 # Usage
 **Step 1**: differentiate MARs and MNARs
 ``` 
-cd ./differentiation ; python3 differentiator.py --site KDM --method akm --thre 0.1
+cd ./differentiation ; python3 differentiator.py --site KDM --method DasaKM --thre 0.1
 ```
 after this step, a csv file with differentiated results will be generated in the data folder.
 
 **Step 2**: generate a json file for the input of BiSIM
 ``` 
-cd ../imputation/preprocess ; python3 json_generate_cust_thre.py --site KDM --method akm --thre 0.1 
+cd ../imputation/preprocess ; python3 json_generate_cust_thre.py --site KDM --method DasaKM --thre 0.1 
 ```
 An input file in json format will be generated in the data folder.
 
 **Step 3**:  run BiSIM model for imputation
 ``` 
-cd ../ ; nohup python3 -u main.py --site KDM --method akm --thre 0.1 --epochs  500 --batch_size 32 > performance.log & 
+cd ../ ; nohup python3 -u main.py --site KDM --method DasaKM --thre 0.1 --epochs  500 --batch_size 32 > performance.log & 
 ```
 
 # Explaination of Parameters
 site: the building, e.g., KDM or WDS.
 
-method:  the differentiator, e.g., akm or tac.
+method:  the differentiator, e.g., DasaKM or TopoAC.
 
 thre: the in-cluster differentiation threshold, e.g., thre=0, 0.1, 0.2.
 

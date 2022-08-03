@@ -12,11 +12,11 @@ import argparse
 def generate_detected_results(thre):
     #clustering based
     for k in range(n_clusters, n_clusters+1):
-        if method == 'akm':
+        if method == 'DasaKM':
             km = KMeans(n_clusters=k, random_state=2021)
             km.fit(km_input)
             labels = km.labels_
-        elif method == 'tac':
+        elif method == 'TopoAC':
             cus_hc = Hierarchical()
             cus_hc.fit(km_input)
             labels = cus_hc.labels
@@ -47,7 +47,7 @@ def generate_detected_results(thre):
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--site', type = str, default='KDM')
-parser.add_argument('--method', type = str, default='akm')
+parser.add_argument('--method', type = str, default='DasaKM')
 parser.add_argument('--thre', type = float, default=0.1)
 args = parser.parse_args()
 
@@ -94,7 +94,7 @@ fp_df = pd.DataFrame(fp_masks, index=original_index)
 
 #concatenation of fingerprint and normalized locations
 km_input = np.concatenate([fp_masks, locs_values], axis=1)
-if method.startswith('tac'):
+if method.startswith('TopoAC'):
     km_input = np.concatenate([km_input, locs.values], axis=1)
 
 n_clusters = 50

@@ -16,7 +16,7 @@ import copy
 from hc_custom_utils import Hierarchical, interpolate_rp
 
 
-def calculate_fpr_tpr(threshold=0.1, p_eta=0.1, cluster=40):
+def calculate_fpr_tpr(threshold=0.1, p_eta=0.1, cluster=40, prop=1):
     random.seed(2021)
     data_root_path = '../data'
     site = 'KDM'
@@ -78,7 +78,8 @@ def calculate_fpr_tpr(threshold=0.1, p_eta=0.1, cluster=40):
     # find FMR truth
     row_index, col_index = np.where(fp_masks > 0)
     # row_index_index = random.sample(range(len(row_index)), int(0.01 * len(row_index)))
-    row_index_index = random.sample(range(len(row_index)), number_of_TMRs)
+    times_of_TMRs = int(1/prop)
+    row_index_index = random.sample(range(len(row_index)), number_of_TMRs*times_of_TMRs)
 
     print('FMR groudtruth samples', len(row_index_index))
     test_row_indexs = row_index[row_index_index]
@@ -160,13 +161,17 @@ tpr_list = []
 tnr_list = []
 accuracy_list = []
 balanced_accuracy_list = []
-for cluster in range(10,200, 10):
-    tpr, tnr, accuracy, balanced_accuracy = calculate_fpr_tpr(threshold=threld, p_eta=0.1, cluster=cluster)
-    tpr_list.append(tpr)
-    tnr_list.append(tnr)
-    accuracy_list.append(accuracy)
-    balanced_accuracy_list.append(balanced_accuracy)
-clu_range = range(10,200, 10)
+proportion_list = range(1,21,1)
+for cluster in range(1,200, 1):  
+    avg_ba_list = []
+    for proportion in proportion_list:
+        tpr, tnr, accuracy, balanced_accuracy = calculate_fpr_tpr(threshold=threld, p_eta=0.0, cluster=cluster, prop=proportion)
+        tpr_list.append(tpr)
+        tnr_list.append(tnr)
+        accuracy_list.append(accuracy)
+        balanced_accuracy_list.append(balanced_accuracy)
+    avg_ba_list.append(np.average(balanced_accuracy_list))
+clu_range = range(1,200, 1)
 n_ba = list(zip(clu_range, balanced_accuracy_list))
 best_n = sorted(n_ba, key=lambda x:x[1], reverse=True)[0]
 print(best_n)
