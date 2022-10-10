@@ -45,7 +45,7 @@ epochs: the number of training rounds
 # Other Information
 The whole dataset could be found from  [here](https://www.kaggle.com/c/indoor-location-navigation/data?select=train)
 
-The code for BRITS is available in [here](https://github.com/caow13/BRITS)
+We appreciate the work of BRITS and their contributed code available in [here](https://github.com/caow13/BRITS)
 
 
 

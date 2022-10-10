@@ -4,6 +4,7 @@ import torch.optim as optim
 import torch.nn.functional as F
 
 from torch.autograd import Variable
+
 import numpy as np
 import pandas as pd
 import json
