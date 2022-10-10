@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="8879bfbf-e571-440b-b3ec-9fed8ebfde9c" name="Changes" comment="update#improve">
+      <change afterPath="$PROJECT_DIR$/.idea/BiSIM.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/differentiation/differentiator.py" beforeDir="false" afterPath="$PROJECT_DIR$/differentiation/differentiator.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/differentiation/geo_analyze.py" beforeDir="false" afterPath="$PROJECT_DIR$/differentiation/geo_analyze.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/differentiation/hc_custom_utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/differentiation/hc_custom_utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/differentiation/kmeans_elbow.py" beforeDir="false" afterPath="$PROJECT_DIR$/differentiation/kmeans_elbow.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/differentiation/kmenas_dasa.py" beforeDir="false" afterPath="$PROJECT_DIR$/differentiation/kmenas_dasa.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/imputation/baselines/case_deletion.py" beforeDir="false" afterPath="$PROJECT_DIR$/imputation/baselines/case_deletion.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/imputation/baselines/linear_interpolation.py" beforeDir="false" afterPath="$PROJECT_DIR$/imputation/baselines/linear_interpolation.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/imputation/baselines/matrix_factorization.py" beforeDir="false" afterPath="$PROJECT_DIR$/imputation/baselines/matrix_factorization.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/imputation/baselines/mice.py" beforeDir="false" afterPath="$PROJECT_DIR$/imputation/baselines/mice.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/imputation/baselines/semi_supervise.py" beforeDir="false" afterPath="$PROJECT_DIR$/imputation/baselines/semi_supervise.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/imputation/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/imputation/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/imputation/models/bisim.py" beforeDir="false" afterPath="$PROJECT_DIR$/imputation/models/bisim.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/imputation/models/sim.py" beforeDir="false" afterPath="$PROJECT_DIR$/imputation/models/sim.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/imputation/preprocess/generate_input_json.py" beforeDir="false" afterPath="$PROJECT_DIR$/imputation/preprocess/generate_input_json.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/imputation/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/imputation/utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="27n1XTGJwpalw7lLBLxLD18fcgD" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+    <option name="showMembers" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/imputation/data/WDS/topo" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/imputation/data/WDS/topo" />
+      <recent name="$PROJECT_DIR$/imputation/data/KDM/topo" />
+      <recent name="$PROJECT_DIR$/imputation/data/KDM" />
+      <recent name="$PROJECT_DIR$/imputation/data/WDS" />
+      <recent name="$PROJECT_DIR$" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/imputation/baselines" />
+      <recent name="$PROJECT_DIR$/imputation/models" />
+      <recent name="$PROJECT_DIR$/imputation" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Python.kmeans_elbow">
+    <configuration default="true" type="PythonConfigurationType" factoryName="Python">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="/opt/anaconda3/bin/python" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="differentiator" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="BiSIM" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="/opt/anaconda3/bin/python" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/differentiation" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/differentiation/differentiator.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="json_generate_cust_thre" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="BiSIM" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="/opt/anaconda3/bin/python" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/imputation/preprocess" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/imputation/preprocess/json_generate_cust_thre.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="kmeans_elbow" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="BiSIM" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="/opt/anaconda3/bin/python" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/differentiation" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/differentiation/kmeans_elbow.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="BiSIM" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="/opt/anaconda3/bin/python" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/imputation" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/imputation/main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.kmeans_elbow" />
+        <item itemvalue="Python.differentiator" />
+        <item itemvalue="Python.main" />
+        <item itemvalue="Python.json_generate_cust_thre" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="8879bfbf-e571-440b-b3ec-9fed8ebfde9c" name="Changes" comment="" />
+      <created>1649941076343</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1649941076343</updated>
+      <workItem from="1649941077783" duration="38192000" />
+      <workItem from="1651064524689" duration="110000" />
+      <workItem from="1659519386863" duration="5240000" />
+      <workItem from="1660220701536" duration="222000" />
+      <workItem from="1665429308161" duration="383000" />
+    </task>
+    <task id="LOCAL-00001" summary="data">
+      <created>1649941229472</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1649941229472</updated>
+    </task>
+    <task id="LOCAL-00002" summary="test github ananymize">
+      <created>1649941764949</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1649941764949</updated>
+    </task>
+    <task id="LOCAL-00003" summary="first version test">
+      <created>1650053270356</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1650053270356</updated>
+    </task>
+    <task id="LOCAL-00004" summary="second version test">
+      <created>1650053561588</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1650053561588</updated>
+    </task>
+    <task id="LOCAL-00005" summary="bisim first version">
+      <created>1650471304735</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1650471304735</updated>
+    </task>
+    <task id="LOCAL-00006" summary="bisim second version">
+      <created>1650518747995</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1650518747995</updated>
+    </task>
+    <task id="LOCAL-00007" summary="bisim third version">
+      <created>1650570523930</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1650570523930</updated>
+    </task>
+    <task id="LOCAL-00008" summary="bisim third version">
+      <created>1650570832836</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1650570832836</updated>
+    </task>
+    <task id="LOCAL-00009" summary="bisim third version">
+      <created>1650571171930</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1650571171930</updated>
+    </task>
+    <task id="LOCAL-00010" summary="bisim fourth version">
+      <created>1650625754345</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1650625754345</updated>
+    </task>
+    <task id="LOCAL-00011" summary="bisim fifth version">
+      <created>1650629809025</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1650629809025</updated>
+    </task>
+    <task id="LOCAL-00012" summary="bisim sixth version">
+      <created>1650629951665</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1650629951665</updated>
+    </task>
+    <task id="LOCAL-00013" summary="bisim seventh version">
+      <created>1650630020322</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1650630020322</updated>
+    </task>
+    <task id="LOCAL-00014" summary="bisim eighth version">
+      <created>1650630223707</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1650630223707</updated>
+    </task>
+    <task id="LOCAL-00015" summary="bisim nineth version">
+      <created>1650631397003</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1650631397003</updated>
+    </task>
+    <task id="LOCAL-00016" summary="update#rename">
+      <created>1659546195761</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1659546195761</updated>
+    </task>
+    <task id="LOCAL-00017" summary="update#improve">
+      <created>1665429524918</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1665429524918</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="0c9dbf95-82ec-445e-b0a3-f469128f6220">
+          <value>
+            <State>
+              <option name="SHOW_ONLY_AFFECTED_CHANGES" value="true" />
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="HEAD" />
+                      </list>
+                    </value>
+                  </entry>
+                  <entry key="roots">
+                    <value>
+                      <list>
+                        <option value="$PROJECT_DIR$" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="OPEN_GENERIC_TABS">
+      <map>
+        <entry key="0c9dbf95-82ec-445e-b0a3-f469128f6220" value="TOOL_WINDOW" />
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="data" />
+    <MESSAGE value="test github ananymize" />
+    <MESSAGE value="first version test" />
+    <MESSAGE value="second version test" />
+    <MESSAGE value="bisim first version" />
+    <MESSAGE value="bisim second version" />
+    <MESSAGE value="bisim third version" />
+    <MESSAGE value="bisim fourth version" />
+    <MESSAGE value="bisim fifth version" />
+    <MESSAGE value="bisim sixth version" />
+    <MESSAGE value="bisim seventh version" />
+    <MESSAGE value="bisim eighth version" />
+    <MESSAGE value="bisim nineth version" />
+    <MESSAGE value="update#rename" />
+    <MESSAGE value="update#improve" />
+    <option name="LAST_COMMIT_MESSAGE" value="update#improve" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/BiSIM$differentiator.coverage" NAME="differentiator Coverage Results" MODIFIED="1650626670596" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/differentiation" />
+    <SUITE FILE_PATH="coverage/BiSIM$kmeans_elbow.coverage" NAME="kmeans_elbow Coverage Results" MODIFIED="1650627531100" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/differentiation" />
+    <SUITE FILE_PATH="coverage/BiSIM$json_generate_cust_thre.coverage" NAME="json_generate_cust_thre Coverage Results" MODIFIED="1650620340807" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/imputation/preprocess" />
+    <SUITE FILE_PATH="coverage/BiSIM$main.coverage" NAME="main Coverage Results" MODIFIED="1650624444774" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/imputation" />
+  </component>
+</project>

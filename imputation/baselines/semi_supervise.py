@@ -12,7 +12,6 @@ import random
 from sklearn.svm import SVR
 from sklearn.ensemble import RandomForestRegressor
 
-
 def knn_position(X_train, Y_train, X_test, Y_test):
     knn = KNeighborsRegressor(n_neighbors=3,weights='distance')
     # knn = KNeighborsRegressor(n_neighbors=1)

@@ -11,7 +11,6 @@ import argparse
 import sys
 import data_loader, models
 import os
-
 parser = argparse.ArgumentParser()
 parser.add_argument('--epochs', type = int, default=500)
 parser.add_argument('--batch_size', type = int, default=32)

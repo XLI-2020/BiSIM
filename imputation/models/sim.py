@@ -11,7 +11,6 @@ SEQ_LEN = 5
 RNN_HID_SIZE = 64
 FEATURE_LEN = 923#665
 ENC_HID_SIZE = 923#665
-
 class Attention(nn.Module):
     def __init__(self, enc_hid_dim, dec_hid_dim):
         super().__init__()

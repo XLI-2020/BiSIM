@@ -11,9 +11,7 @@ import math
 import sys
 import random
 import argparse
-
 pd.set_option('display.float_format', lambda x: '%.0f' % x)
-
 parser = argparse.ArgumentParser()
 parser.add_argument('--method', type=str, default='akm')
 parser.add_argument('--site', type=str, default='KDM')

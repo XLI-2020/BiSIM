@@ -16,7 +16,6 @@ class Model(nn.Module):
         ret_b = self.reverse(self.sim_b(data, 'backward'))
         ret = self.merge_ret(ret_f, ret_b)
         return ret
-
     def merge_ret(self, ret_f, ret_b):
         loss_f = ret_f['loss']
         print('loss f', loss_f.item())

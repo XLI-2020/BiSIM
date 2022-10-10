@@ -5,7 +5,6 @@ from geo_analyze import geo_referencing,plot_points, plot_shape
 from shapely.geometry import shape, GeometryCollection, Polygon, MultiPolygon, MultiPoint
 import pandas as pd
 
-
 def euler_distance(point1: np.ndarray, point2: list) -> float:
     distance = 0.0
     for a, b in zip(point1, point2):

@@ -15,7 +15,6 @@ import matplotlib.cm as cm
 import copy
 from hc_custom_utils import Hierarchical, interpolate_rp
 
-
 def calculate_fpr_tpr(threshold=0.1, p_eta=0.1, cluster=40, prop=1):
     random.seed(2021)
     data_root_path = '../data'

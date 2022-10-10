@@ -1,6 +1,5 @@
 import json
 import os
-
 from sklearn.neighbors import KNeighborsRegressor
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.svm import SVR
