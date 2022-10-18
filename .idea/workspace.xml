@@ -1,26 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8879bfbf-e571-440b-b3ec-9fed8ebfde9c" name="Changes" comment="update#improve">
-      <change afterPath="$PROJECT_DIR$/.idea/BiSIM.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="8879bfbf-e571-440b-b3ec-9fed8ebfde9c" name="Changes" comment="update#">
+      <change beforePath="$PROJECT_DIR$/.idea/BiSIM.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/BiSIM.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/differentiation/differentiator.py" beforeDir="false" afterPath="$PROJECT_DIR$/differentiation/differentiator.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/differentiation/geo_analyze.py" beforeDir="false" afterPath="$PROJECT_DIR$/differentiation/geo_analyze.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/differentiation/hc_custom_utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/differentiation/hc_custom_utils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/differentiation/kmeans_elbow.py" beforeDir="false" afterPath="$PROJECT_DIR$/differentiation/kmeans_elbow.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/differentiation/kmenas_dasa.py" beforeDir="false" afterPath="$PROJECT_DIR$/differentiation/kmenas_dasa.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputation/baselines/case_deletion.py" beforeDir="false" afterPath="$PROJECT_DIR$/imputation/baselines/case_deletion.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputation/baselines/linear_interpolation.py" beforeDir="false" afterPath="$PROJECT_DIR$/imputation/baselines/linear_interpolation.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputation/baselines/matrix_factorization.py" beforeDir="false" afterPath="$PROJECT_DIR$/imputation/baselines/matrix_factorization.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputation/baselines/mice.py" beforeDir="false" afterPath="$PROJECT_DIR$/imputation/baselines/mice.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputation/baselines/semi_supervise.py" beforeDir="false" afterPath="$PROJECT_DIR$/imputation/baselines/semi_supervise.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputation/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/imputation/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputation/models/bisim.py" beforeDir="false" afterPath="$PROJECT_DIR$/imputation/models/bisim.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputation/models/sim.py" beforeDir="false" afterPath="$PROJECT_DIR$/imputation/models/sim.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputation/preprocess/generate_input_json.py" beforeDir="false" afterPath="$PROJECT_DIR$/imputation/preprocess/generate_input_json.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/imputation/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/imputation/utils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -200,7 +185,8 @@
       <workItem from="1651064524689" duration="110000" />
       <workItem from="1659519386863" duration="5240000" />
       <workItem from="1660220701536" duration="222000" />
-      <workItem from="1665429308161" duration="383000" />
+      <workItem from="1665429308161" duration="616000" />
+      <workItem from="1666090470426" duration="4669000" />
     </task>
     <task id="LOCAL-00001" summary="data">
       <created>1649941229472</created>
@@ -321,7 +307,28 @@
       <option name="project" value="LOCAL" />
       <updated>1665429524918</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="update#improve">
+      <created>1665429696136</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1665429696136</updated>
+    </task>
+    <task id="LOCAL-00019" summary="update#improve">
+      <created>1665429810189</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1665429810189</updated>
+    </task>
+    <task id="LOCAL-00020" summary="update#">
+      <created>1666102972145</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1666102972145</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -384,7 +391,8 @@
     <MESSAGE value="bisim nineth version" />
     <MESSAGE value="update#rename" />
     <MESSAGE value="update#improve" />
-    <option name="LAST_COMMIT_MESSAGE" value="update#improve" />
+    <MESSAGE value="update#" />
+    <option name="LAST_COMMIT_MESSAGE" value="update#" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/BiSIM$differentiator.coverage" NAME="differentiator Coverage Results" MODIFIED="1650626670596" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/differentiation" />

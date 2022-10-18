@@ -43,7 +43,8 @@ batch_size: the number of samples for back propagation in one pass
 epochs: the number of training rounds
 
 # Other Information
-The whole dataset could be found from  [here](https://www.kaggle.com/c/indoor-location-navigation/data?select=train)
+
+[//]: # (The whole dataset could be found from  [here]&#40;https://www.kaggle.com/c/indoor-location-navigation/data?select=train&#41;)
 
 We appreciate the work of BRITS and their contributed code available in [here](https://github.com/caow13/BRITS)
 
