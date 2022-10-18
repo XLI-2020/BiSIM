@@ -18,13 +18,13 @@ class Model(nn.Module):
         return ret
     def merge_ret(self, ret_f, ret_b):
         loss_f = ret_f['loss']
-        print('loss f', loss_f.item())
+        # print('loss f', loss_f.item())
         loss_b = ret_b['loss']
-        print('loss b', loss_b.item())
+        # print('loss b', loss_b.item())
         loss_c = self.get_consistency_loss(ret_f['imputations'], ret_b['imputations'])
-        print('loss c for fingerprint', loss_c.item())
+        # print('loss c for fingerprint', loss_c.item())
         loss_d = self.get_consistency_loss(ret_f['decoded_y'], ret_b['decoded_y'])
-        print('loss d for reference point', loss_d.item())
+        # print('loss d for reference point', loss_d.item())
         loss = loss_f + loss_b + loss_c + loss_d
         imputations = (ret_f['imputations'] + ret_b['imputations']) / 2
         decoded_y = (ret_f['decoded_y'] + ret_b['decoded_y']) / 2

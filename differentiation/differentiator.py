@@ -53,7 +53,11 @@ parser.add_argument('--method', type = str, default='DasaKM')
 parser.add_argument('--thre', type = float, default=0.1)
 args = parser.parse_args()
 
+# cd ./differentiation ; python3 differentiator.py --site KDM --method DasaKM --thre 0.1
+
+
 random.seed(2021)
+
 site = args.site
 method = args.method
 thre = args.thre

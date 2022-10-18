@@ -22,13 +22,13 @@ after this step, a csv file with differentiated results will be generated in the
 
 **Step 2**: generate a json file for the input of BiSIM
 ``` 
-cd ../imputation/preprocess ; python3 json_generate_cust_thre.py --site KDM --method DasaKM --thre 0.1 
+cd ../imputation/preprocess ; python3 generate_input_json.py --site KDM --method DasaKM --thre 0.1 
 ```
 An input file in json format will be generated in the data folder.
 
 **Step 3**:  run BiSIM model for imputation
 ``` 
-cd ../ ; nohup python3 -u main.py --site KDM --method DasaKM --thre 0.1 --epochs  500 --batch_size 32 > performance.log & 
+cd ../ ; nohup python3 -u main.py --site KDM --method DasaKM --thre 0.1 --epochs  500 --batch_size 32 > results.txt & 
 ```
 
 # Explaination of Parameters

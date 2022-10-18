@@ -51,15 +51,15 @@ def train(model):
         print('evolving...')
         print('loss:')
         print(train_epoch_loss)
-        print('localization dist:')
-        print(inner_local_dist)
+        # print('localization dist:')
+        # print(inner_local_dist)
 
         print('fp mae:')
         print(fp_mae_list)
-        print('rp dist:')
-        print(rp_dist_list)
+        # print('rp dist:')
+        # print(rp_dist_list)
         print('min localization dist: knn, wknn', min(inner_local_dist), min(w_inner_local_dist))
-        print('min rp dist:', min(rp_dist_list))
+        # print('min rp dist:', min(rp_dist_list))
 
 # evaluate the MAE, Euclidean distance of RPs
 def evaluate(model, val_iter):
@@ -105,10 +105,8 @@ def evaluate(model, val_iter):
         pos_decoded_y += decoded_y.tolist()
         decode_batch_index, decode_seq_index, decode_label_index = np.where(eval_masks_y == 1)
         decoded_y_points += decoded_y[decode_batch_index[::2], decode_seq_index[::2], :].tolist()
-
         # print('decoded_y_list', len(decoded_y_list), len(eval_label))
         labels += label.tolist()
-
 
     evals = np.asarray(evals)
     imputations = np.asarray(imputations)
@@ -161,7 +159,7 @@ def evaluate(model, val_iter):
     reference_points = reference_points.tolist()
     ground_points = ground_points.tolist()
     evaluted_res, wknn_dist = utils.get_localization_dist(radio_map, reference_points, fingprint_sample, ground_points)
-    print('inner localization distance:', evaluted_res, wknn_dist)
+    # print('inner localization distance:', evaluted_res, wknn_dist)
     inner_local_dist.append(evaluted_res)
     w_inner_local_dist.append(wknn_dist)
     fp_mae_list.append(round(fp_mae, 6))
