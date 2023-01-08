@@ -187,6 +187,7 @@ wifi_df = pd.read_csv(os.path.join(data_path, 'fp_filterd_{site}_{method}_{thre}
 
 
 other_columns = ['floor', 'x', 'y', 'wp_ts','ts', 'path']
+
 # outlier columns removing
 all_null_df = pd.DataFrame(pd.isnull(wifi_df[wifi_df==-100]).sum(axis=0))
 all_null_cols = list(all_null_df[all_null_df[0]==0].index)

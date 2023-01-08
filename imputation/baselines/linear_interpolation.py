@@ -82,6 +82,7 @@ Y_train = train_df.loc[:, ['x', 'y']].astype(float).values
 X_test = test_df.iloc[:,:FEATURE_LEN].astype(float).values
 Y_test = test_df.loc[:, ['x', 'y']].astype(float).values
 
+
 def dist(p1, p2):
     return math.sqrt((p1[0]-p2[0])**2 + (p1[1]-p2[1])**2)
 

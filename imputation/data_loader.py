@@ -8,6 +8,7 @@ site = 'KDM'
 data_path = './data/{site}/'.format(site=site)
 
 class MySet(Dataset):
+
     def __init__(self, file_name):
         super(MySet, self).__init__()
         self.content = open(os.path.join(data_path, file_name)).readlines()

@@ -12,6 +12,7 @@ RNN_HID_SIZE = 64
 FEATURE_LEN = 923#665
 ENC_HID_SIZE = 923#665
 class Attention(nn.Module):
+
     def __init__(self, enc_hid_dim, dec_hid_dim):
         super().__init__()
         self.attn = nn.Linear((enc_hid_dim * 1) + dec_hid_dim, dec_hid_dim)

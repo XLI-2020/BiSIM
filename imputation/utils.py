@@ -16,6 +16,7 @@ from sklearn.neighbors import KNeighborsRegressor
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.svm import SVR
 random.seed(2020)
+
 def to_var(var):
     if torch.is_tensor(var):
         var = Variable(var)

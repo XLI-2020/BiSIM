@@ -13,7 +13,6 @@ site = 'KDM'
 data_root_path = '../data'
 data_path = os.path.join(data_root_path, site)
 wifi_df = pd.read_csv(os.path.join(data_path, 'fp_samples'), header=0)
-
 wifi_df = wifi_df.loc[~wifi_df['wp_ts'].isnull(),:]
 FEATURE_LEN = wifi_df.shape[1] - 6
 wifi_df = wifi_df.sample(frac=1, random_state=2021)

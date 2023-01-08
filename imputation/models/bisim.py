@@ -8,6 +8,7 @@ class Model(nn.Module):
     def __init__(self):
         super(Model, self).__init__()
         self.build()
+
     def build(self):
         self.sim_f = sim.Model()
         self.sim_b = sim.Model()

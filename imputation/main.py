@@ -145,6 +145,7 @@ def evaluate(model, val_iter):
     test_index = np.unique(np.where(pos_eval_masks_y==1)[0])
     train_index = [i for i in all_index if i not in test_index]
     radio_map = pos_imputations[train_index]
+
     reference_points = pos_decoded_y[train_index]
 
     fingprint_sample = pos_imputations[test_index]
