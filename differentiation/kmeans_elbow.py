@@ -15,7 +15,7 @@ from hc_custom_utils import Hierarchical, interpolate_rp
 
 random.seed(2021)
 data_root_path = '../data'
-site = 'KDM'
+site = 'Kaide'
 method = 'elbow'
 p_eta = 0.1
 data_root_path = '../imputation/data'

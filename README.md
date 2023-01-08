@@ -46,7 +46,7 @@ epochs: the number of training rounds
 
 [//]: # (The whole dataset could be found from  [here]&#40;https://www.kaggle.com/c/indoor-location-navigation/data?select=train&#41;)
 
-We appreciate the work of BRITS and their contributed code available in [here](https://github.com/caow13/BRITS)
+We appreciate the work of BRITS and SSGAN, and their contributed codes available in [here](https://github.com/caow13/BRITS) for BRITS and in [here](https://github.com/zjuwuyy-DL/Generative-Semi-supervised-Learning-for-Multivariate-Time-Series-Imputation)
 
 
 
