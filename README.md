@@ -52,15 +52,16 @@ We appreciate the work of BRITS and SSGAN, and their contributed codes available
 
 # Citation
 
+Please cite our paper if you use it for research purposes.
+
 ``` 
-@article{chan2022continuous,
-	title={Continuous Social Distance Monitoring in Indoor Space},
-	author={Chan, Harry Kai-Ho and Li, Huan and Li, Xiao and Lu, Hua},
-	journal={Proceedings of the VLDB Endowment},
-	volume={15},
-	number={7},
-	year={2022},
-	publisher={VLDB Endowment}
+@inproceedings{li2023data,
+  title={Data Imputation for Sparse Radio Maps in Indoor Positioning},
+  author={Li, Xiao and Li, Huan and Chan, Harry Kai-Ho and Lu, Hua and Jensen, Christian S},
+  booktitle={2023 IEEE 39th International Conference on Data Engineering (ICDE)},
+  pages={2235--2248},
+  year={2023},
+  organization={IEEE}
 }
 ```
 
