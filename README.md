@@ -42,6 +42,7 @@ batch_size: the number of samples for back propagation in one pass
 
 epochs: the number of training rounds
 
+
 # Acknowledgements
 
 [//]: # (The whole dataset could be found from  [here]&#40;https://www.kaggle.com/c/indoor-location-navigation/data?select=train&#41;)
@@ -49,6 +50,19 @@ epochs: the number of training rounds
 We appreciate the work of BRITS and SSGAN, and their contributed codes available in [here](https://github.com/caow13/BRITS) for BRITS and [here](https://github.com/zjuwuyy-DL/Generative-Semi-supervised-Learning-for-Multivariate-Time-Series-Imputation) for SSGAN.
 
 
+# Citation
+
+``` 
+@article{chan2022continuous,
+	title={Continuous Social Distance Monitoring in Indoor Space},
+	author={Chan, Harry Kai-Ho and Li, Huan and Li, Xiao and Lu, Hua},
+	journal={Proceedings of the VLDB Endowment},
+	volume={15},
+	number={7},
+	year={2022},
+	publisher={VLDB Endowment}
+}
+```
 
 
 
